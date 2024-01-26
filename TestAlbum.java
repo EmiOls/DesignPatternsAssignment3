@@ -9,12 +9,20 @@ public class TestAlbum {
                 new Album("Best of", "Mozart", Album.Genre.CLASSICAL),
                 new Album("Thank you for the music", "ABBA", Album.Genre.POP)
         };
-        printAlbums(albums);
+        System.out.println("All albums exluding pop:");
+        GenreFilter filterExcludePop = new FilterExcludePop();
+        printAlbums(albums, filterExcludePop);
+
+        System.out.println("\nAll pop albums:");
+        GenreFilter filterIncludePopOnly = new FilterIncludePopOnly();
+        printAlbums(albums, filterIncludePopOnly);
     }
 
-    static void printAlbums(Album[] albums) {
+    static void printAlbums(Album[] albums, GenreFilter genreFilter) {
         for (Album a : albums) {
-            System.out.println(a);
+            if (genreFilter.permit(a)) {
+                System.out.println(" * " + a);
+            }
         }
     }
 }
